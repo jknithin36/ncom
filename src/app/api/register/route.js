@@ -1,8 +1,6 @@
 import connectToDB from "@/database";
 import User from "@/models/user";
-// import bcrypt from "bcrypt";
-// import { hash } from "bcryptjs";
-
+import { hash } from "bcryptjs";
 import Joi from "joi";
 import { NextResponse } from "next/server";
 
@@ -42,12 +40,12 @@ export async function POST(req) {
         message: "User is already exists. Please try with different email.",
       });
     } else {
-      // const hashPassword = await bcrypt.hash(password, 10);
+      const hashPassword = await hash(password, 12);
 
       const newlyCreatedUser = await User.create({
         name,
         email,
-        password,
+        password: hashPassword,
         role,
       });
 

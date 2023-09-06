@@ -1,11 +1,60 @@
 "use client";
 
 import InputComponent from "@/components/FormElements/InputComponent";
+import { GlobalContext } from "@/context";
+import { login } from "@/services/login";
 import { loginFormControls } from "@/utils";
+import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 
+import { useContext, useEffect, useState } from "react";
+
+const initialFormdata = {
+  email: "",
+  password: "",
+};
+
 export default function Login() {
+  const [formData, setFormData] = useState(initialFormdata);
+
+  const { isAuthUser, setIsAuthUser, user, setUser } =
+    useContext(GlobalContext);
+
   const router = useRouter();
+
+  console.log(formData);
+
+  function isValidForm() {
+    return formData &&
+      formData.email &&
+      formData.email.trim() !== "" &&
+      formData.password &&
+      formData.password.trim() !== ""
+      ? true
+      : false;
+  }
+
+  async function handleLogin() {
+    const res = await login(formData);
+
+    console.log(res);
+
+    if (res.success) {
+      setIsAuthUser(true);
+      setUser(res?.finalData?.user);
+      setFormData(initialFormdata);
+      Cookies.set("token", res?.finalData?.token);
+      localStorage.setItem("user", JSON.stringify(res?.finalData?.user));
+    } else {
+      setIsAuthUser(false);
+    }
+  }
+
+  console.log(isAuthUser, user);
+
+  useEffect(() => {
+    if (isAuthUser) router.push("/");
+  }, [isAuthUser]);
 
   return (
     <div className="bg-white relative">
@@ -23,6 +72,13 @@ export default function Login() {
                       type={controlItem.type}
                       placeholder={controlItem.placeholder}
                       label={controlItem.label}
+                      value={formData[controlItem.id]}
+                      onChange={(event) => {
+                        setFormData({
+                          ...formData,
+                          [controlItem.id]: event.target.value,
+                        });
+                      }}
                     />
                   ) : null
                 )}
@@ -30,6 +86,8 @@ export default function Login() {
                   className=" disabled:opacity-50 inline-flex w-full items-center justify-center bg-black px-6 py-4 text-lg 
                      text-white transition-all duration-200 ease-in-out focus:shadow font-medium uppercase tracking-wide
                      "
+                  disabled={!isValidForm()}
+                  onClick={handleLogin}
                 >
                   Login
                 </button>
