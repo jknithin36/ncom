@@ -2,13 +2,16 @@
 
 import InputComponent from "@/components/FormElements/InputComponent";
 import SelectComponent from "@/components/FormElements/SelectComponent";
+import { GlobalContext } from "@/context";
 
 import { registerNewUser } from "@/services/register";
 import { registrationFormControls } from "@/utils";
 
-import { useState } from "react";
+import { useContext, useState } from "react";
 
-const isRegistered = false;
+import Notification from "../../components/Notification";
+
+// const isRegistered = false;
 
 const initialFormData = {
   name: "",
@@ -19,6 +22,8 @@ const initialFormData = {
 
 export default function Register() {
   const [formData, setFormData] = useState(initialFormData);
+  const [isRegistered, setIsRegistered] = useState(false);
+  const { commonLoader, setCommonLoader } = useContext(GlobalContext);
 
   console.log(formData);
 
@@ -37,8 +42,17 @@ export default function Register() {
   console.log(isFormValid());
 
   async function handleRegisterOnSubmit() {
+    setCommonLoader(true);
     const data = await registerNewUser(formData);
 
+    if (data.success) {
+      setIsRegistered(true);
+      setCommonLoader(false);
+      setFormData(initialFormData);
+    } else {
+      setCommonLoader(false);
+      setFormData(initialFormData);
+    }
     console.log(data);
   }
   return (
@@ -106,6 +120,7 @@ export default function Register() {
           </div>
         </div>
       </div>
+      <Notification />
     </div>
   );
 }
