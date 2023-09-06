@@ -10,6 +10,9 @@ import { registrationFormControls } from "@/utils";
 import { useContext, useState } from "react";
 
 import Notification from "../../components/Notification";
+import ComponentLevelLoader from "@/components/Loader/componentlevel";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 // const isRegistered = false;
 
@@ -24,6 +27,8 @@ export default function Register() {
   const [formData, setFormData] = useState(initialFormData);
   const [isRegistered, setIsRegistered] = useState(false);
   const { commonLoader, setCommonLoader } = useContext(GlobalContext);
+
+  const router = useRouter();
 
   console.log(formData);
 
@@ -46,10 +51,16 @@ export default function Register() {
     const data = await registerNewUser(formData);
 
     if (data.success) {
+      toast.success(data.message, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
       setIsRegistered(true);
       setCommonLoader(false);
       setFormData(initialFormData);
     } else {
+      toast.error(data.message, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
       setCommonLoader(false);
       setFormData(initialFormData);
     }
@@ -112,7 +123,15 @@ export default function Register() {
                     disabled={!isFormValid()}
                     onClick={handleRegisterOnSubmit}
                   >
-                    Register
+                    {commonLoader ? (
+                      <ComponentLevelLoader
+                        text={"Registering"}
+                        color={"#ffffff"}
+                        loading={commonLoader}
+                      />
+                    ) : (
+                      "Register"
+                    )}
                   </button>
                 </div>
               )}

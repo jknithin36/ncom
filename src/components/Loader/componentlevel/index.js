@@ -2,7 +2,7 @@ import { PulseLoader } from "react-spinners";
 
 export default function ComponentLevelLoader({ text, color, loading, size }) {
   return (
-    <span>
+    <span className="flex gap-1">
       {text}
       <PulseLoader
         color={color}
