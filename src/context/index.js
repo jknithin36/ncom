@@ -8,7 +8,11 @@ export const GlobalContext = createContext(null);
 
 export default function GlobalState({ children }) {
   const [showNavModal, setShowNavModal] = useState(false);
-  const [commonLoader, setCommonLoader] = useState(false);
+  const [pageLevelLoader, setPageLevelLoader] = useState(false);
+  const [componentLevelLoader, setComponentLevelLoader] = useState({
+    loading: false,
+    id: "",
+  });
   const [isAuthUser, setIsAuthUser] = useState(null);
   const [user, setUser] = useState(null);
 
@@ -29,12 +33,14 @@ export default function GlobalState({ children }) {
       value={{
         showNavModal,
         setShowNavModal,
-        commonLoader,
-        setCommonLoader,
+        pageLevelLoader,
+        setPageLevelLoader,
         isAuthUser,
         setIsAuthUser,
         user,
         setUser,
+        componentLevelLoader,
+        setComponentLevelLoader,
       }}
     >
       {children}
