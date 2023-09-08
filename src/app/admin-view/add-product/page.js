@@ -6,7 +6,7 @@ import TileComponent from "@/components/FormElements/TileComponent";
 import ComponentLevelLoader from "@/components/Loader/componentlevel";
 import Notification from "@/components/Notification";
 import { GlobalContext } from "@/context";
-import { addNewProduct } from "@/services/product";
+import { addNewProduct, updateAProduct } from "@/services/product";
 import {
   AvailableSizes,
   adminAddProductformControls,
@@ -71,10 +71,20 @@ const initialFormData = {
 export default function AdminAddNewProduct() {
   const [formData, setFormData] = useState(initialFormData);
 
-  const { componentLevelLoader, setComponentLevelLoader } =
-    useContext(GlobalContext);
+  const {
+    componentLevelLoader,
+    setComponentLevelLoader,
+    currentUpdatedProduct,
+    setCurrentUpdatedProduct,
+  } = useContext(GlobalContext);
+
+  console.log(currentUpdatedProduct);
 
   const router = useRouter();
+
+  useEffect(() => {
+    if (currentUpdatedProduct !== null) setFormData(currentUpdatedProduct);
+  }, [currentUpdatedProduct]);
 
   async function handleImage(event) {
     const extractImageUrl = await helperForUPloadingImageToFirebase(
@@ -107,7 +117,10 @@ export default function AdminAddNewProduct() {
 
   async function handleAddProduct() {
     setComponentLevelLoader({ loading: true, id: "" });
-    const res = await addNewProduct(formData);
+    const res =
+      currentUpdatedProduct !== null
+        ? await updateAProduct(formData)
+        : await addNewProduct(formData);
 
     console.log(res);
 
@@ -118,7 +131,7 @@ export default function AdminAddNewProduct() {
       });
 
       setFormData(initialFormData);
-
+      setCurrentUpdatedProduct(null);
       setTimeout(() => {
         router.push("/admin-view/all-products");
       }, 1000);
@@ -186,10 +199,16 @@ export default function AdminAddNewProduct() {
           >
             {componentLevelLoader && componentLevelLoader.loading ? (
               <ComponentLevelLoader
-                text={"Adding Product"}
+                text={
+                  currentUpdatedProduct !== null
+                    ? "Updating Product"
+                    : "Adding Product"
+                }
                 color={"#ffffff"}
                 loading={componentLevelLoader && componentLevelLoader.loading}
               />
+            ) : currentUpdatedProduct !== null ? (
+              "Update Product"
             ) : (
               "Add Product"
             )}

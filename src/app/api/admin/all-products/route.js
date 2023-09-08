@@ -7,28 +7,19 @@ export const dynamic = "force-dynamic";
 export async function GET(req) {
   try {
     await connectToDB();
-    const user = "admin";
 
-    if (user === "admin") {
-      const extractAllproducts = await Product.find({});
+    const extractAllproducts = await Product.find({});
 
-      if (extractAllproducts) {
-        return NextResponse.json({
-          success: true,
-          data: extractAllproducts,
-        });
-      } else {
-        NextResponse.json({
-          success: false,
-          status: 204,
-          message: "No Product Found",
-        });
-      }
-    } else {
+    if (extractAllproducts) {
       return NextResponse.json({
+        success: true,
+        data: extractAllproducts,
+      });
+    } else {
+      NextResponse.json({
         success: false,
         status: 204,
-        message: "No Products found",
+        message: "No Product Found",
       });
     }
   } catch (error) {
