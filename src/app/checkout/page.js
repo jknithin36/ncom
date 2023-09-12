@@ -2,6 +2,8 @@
 
 import { GlobalContext } from "@/context";
 import { fetchAllAddresses } from "@/services/address";
+import { callStripeSession } from "@/services/stripe";
+import { loadStripe } from "@stripe/stripe-js";
 import { useRouter } from "next/navigation";
 
 import { useContext, useEffect, useState } from "react";
@@ -17,10 +19,16 @@ export default function Checkout() {
   } = useContext(GlobalContext);
 
   const [selectedAddress, setSelectedAddress] = useState(null);
+  const [isOrderProcessing, setIsOrderProcessing] = useState(false);
+  const [orderSuccess, setOrderSuccess] = useState(false);
 
   //
 
   const router = useRouter();
+
+  const publishablekey =
+    "pk_test_51NpSuqSAG0fngGl693hUv9povN1Xg9ZrGTtwNryftc4GJn3kjAchOecylODUM6feFMjyyIuZ8PxeKJj4YdxjlYDq00aqCuH1Tp";
+  const stripePromise = loadStripe(publishablekey);
   console.log(cartItems);
 
   async function getAllAddresses() {
@@ -62,7 +70,33 @@ export default function Checkout() {
   }
 
   console.log(checkoutFormData);
+  //
 
+  async function handleCheckout() {
+    const stripe = await stripePromise;
+
+    const createLineItems = cartItems.map((item) => ({
+      price_data: {
+        currency: "usd",
+        product_data: {
+          images: [item.productID.imageUrl],
+          name: item.productID.name,
+        },
+        unit_amount: item.productID.price * 100,
+      },
+      quantity: 1,
+    }));
+
+    const res = await callStripeSession(createLineItems);
+    setIsOrderProcessing(true);
+    localStorage.setItem("stripe", true);
+    localStorage.setItem("checkoutFormData", JSON.stringify(checkoutFormData));
+    const { error } = await stripe.redirectToCheckout({
+      sessionId: res.id,
+    });
+
+    console.log(error);
+  }
   //
   return (
     <div>
@@ -168,6 +202,7 @@ export default function Checkout() {
                   (cartItems && cartItems.length === 0) ||
                   Object.keys(checkoutFormData.shippingAddress).length === 0
                 }
+                onClick={handleCheckout}
                 className="disabled:opacity-50 mt-5 mr-5 w-full  inline-block bg-black text-white px-5 py-3 text-xs font-medium uppercase tracking-wide"
               >
                 Checkout
