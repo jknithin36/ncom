@@ -1,7 +1,7 @@
 "use client";
 
 import { Fragment, useContext, useEffect } from "react";
-import CommonModal from "../CommomModal";
+import CommomModal from "../CommomModal";
 import { GlobalContext } from "@/context";
 import { deleteFromCart, getAllCartItems } from "@/services/cart";
 import { toast } from "react-toastify";
@@ -23,9 +23,29 @@ export default function CartModal() {
 
   async function extractAllCartItems() {
     const res = await getAllCartItems(user?._id);
+
     if (res.success) {
-      setCartItems(res.data);
-      localStorage.setItem("cartItems", JSON.stringify(res.data));
+      const updatedData =
+        res.data && res.data.length
+          ? res.data.map((item) => ({
+              ...item,
+              productID: {
+                ...item.productID,
+                price:
+                  item.productID.onSale === "yes"
+                    ? parseInt(
+                        (
+                          item.productID.price -
+                          item.productID.price *
+                            (item.productID.priceDrop / 100)
+                        ).toFixed(2)
+                      )
+                    : item.productID.price,
+              },
+            }))
+          : [];
+      setCartItems(updatedData);
+      localStorage.setItem("cartItems", JSON.stringify(updatedData));
     }
 
     console.log(res);
@@ -55,7 +75,7 @@ export default function CartModal() {
   }, [user]);
   //
   return (
-    <CommonModal
+    <CommomModal
       showButtons={true}
       show={showCartModal}
       setShow={setShowCartModal}
@@ -141,7 +161,7 @@ export default function CartModal() {
             }}
             className="mt-1.5 w-full inline-block bg-black text-white px-5 py-3 text-xs font-medium uppercase tracking-wide disabled:opacity-50"
           >
-            CheckOUT
+            CheckOut
           </button>
           <div className="mt-6 flex justify-center text-center text-sm text-gray-600">
             <button type="button" className="font-medium text-grey">

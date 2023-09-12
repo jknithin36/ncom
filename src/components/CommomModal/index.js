@@ -3,7 +3,7 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 
-export default function CommonModal({
+export default function CommomModal({
   modalTitle,
   mainContent,
   showButtons,

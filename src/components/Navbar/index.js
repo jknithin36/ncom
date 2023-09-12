@@ -2,14 +2,11 @@
 
 import { GlobalContext } from "@/context";
 import { adminNavOptions, navOptions } from "@/utils";
-import Cookies from "js-cookie";
-
 import { Fragment, useContext, useEffect } from "react";
-import CommonModal from "../CommomModal";
+import CommomModal from "../CommomModal";
+import Cookies from "js-cookie";
 import { usePathname, useRouter } from "next/navigation";
 import CartModal from "../CartModal";
-
-// const isAdminView = false;
 
 function NavItems({ isModalView = false, isAdminView, router }) {
   return (
@@ -17,6 +14,7 @@ function NavItems({ isModalView = false, isAdminView, router }) {
       className={`items-center justify-between w-full md:flex md:w-auto ${
         isModalView ? "" : "hidden"
       }`}
+      id="nav-items"
     >
       <ul
         className={`flex flex-col p-4 md:p-0 mt-4 font-medium  rounded-lg md:flex-row md:space-x-8 md:mt-0 md:border-0 bg-white ${
@@ -61,7 +59,6 @@ export default function Navbar() {
   } = useContext(GlobalContext);
 
   const pathName = usePathname();
-
   const router = useRouter();
 
   console.log(currentUpdatedProduct, "navbar");
@@ -93,15 +90,16 @@ export default function Navbar() {
             className="flex items-center cursor-pointer"
           >
             <span className="slef-center text-2xl font-semibold whitespace-nowrap">
-              TakeWealth
+              Ecommercery
             </span>
           </div>
           <div className="flex md:order-2 gap-2">
-            {/* // IF ELSE BLOCK USING TERNERAY OPERATOR */}
             {!isAdminView && isAuthUser ? (
               <Fragment>
                 <button
-                  className="mt-1.5 inline-block bg-black px-5 py-3 text-xs font-medium uppercase tracking-wide text-white"
+                  className={
+                    "mt-1.5 inline-block bg-black px-5 py-3 text-xs font-medium upprcase tracking-wide text-white"
+                  }
                   onClick={() => router.push("/account")}
                 >
                   Account
@@ -116,7 +114,6 @@ export default function Navbar() {
                 </button>
               </Fragment>
             ) : null}
-
             {user?.role === "admin" ? (
               isAdminView ? (
                 <button
@@ -130,24 +127,29 @@ export default function Navbar() {
               ) : (
                 <button
                   onClick={() => router.push("/admin-view")}
-                  className="mt-1.5 inline-block bg-black px-5 py-3 text-xs font-medium uppercase tracking-wide text-white"
+                  className={
+                    "mt-1.5 inline-block bg-black px-5 py-3 text-xs font-medium upprcase tracking-wide text-white"
+                  }
                 >
                   Admin View
                 </button>
               )
             ) : null}
-
             {isAuthUser ? (
               <button
                 onClick={handleLogout}
-                className="mt-1.5 inline-block bg-black px-5 py-3 text-xs font-medium uppercase tracking-wide text-white"
+                className={
+                  "mt-1.5 inline-block bg-black px-5 py-3 text-xs font-medium upprcase tracking-wide text-white"
+                }
               >
                 Logout
               </button>
             ) : (
               <button
                 onClick={() => router.push("/login")}
-                className="mt-1.5 inline-block bg-black px-5 py-3 text-xs font-medium uppercase tracking-wide text-white"
+                className={
+                  "mt-1.5 inline-block bg-black px-5 py-3 text-xs font-medium upprcase tracking-wide text-white"
+                }
               >
                 Login
               </button>
@@ -171,15 +173,15 @@ export default function Navbar() {
                 <path
                   fillRule="evenodd"
                   d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-                  clipRule="evenodd"
+                  clip-rule="evenodd"
                 ></path>
               </svg>
             </button>
           </div>
-          <NavItems isAdminView={isAdminView} router={router} />
+          <NavItems router={router} isAdminView={isAdminView} />
         </div>
       </nav>
-      <CommonModal
+      <CommomModal
         showModalTitle={false}
         mainContent={
           <NavItems
