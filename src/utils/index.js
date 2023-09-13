@@ -11,18 +11,18 @@ export const navOptions = [
   },
   {
     id: "listingMen",
-    label: "Men",
-    path: "/product/listing/men",
+    label: "Marvel Comics",
+    path: "/product/listing/marvel",
   },
   {
     id: "listingWomen",
-    label: "Women",
-    path: "/product/listing/women",
+    label: "DC Comics",
+    path: "/product/listing/dc",
   },
   {
     id: "listingKids",
-    label: "kids",
-    path: "/product/listing/kids",
+    label: "Others",
+    path: "/product/listing/others",
   },
 ];
 
@@ -133,15 +133,15 @@ export const adminAddProductformControls = [
     options: [
       {
         id: "men",
-        label: "Men",
+        label: "Marvel",
       },
       {
         id: "women",
-        label: "Women",
+        label: "dc",
       },
       {
         id: "kids",
-        label: "Kids",
+        label: "others",
       },
     ],
   },

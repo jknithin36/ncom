@@ -31,7 +31,7 @@ export default function Home() {
         <div className="grid max-w-screen-xl px-4 py-8 mx-suto  lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
           <div className="mr-auto place-self-center lg:col-span-7">
             <h1 className="max-w-2xl mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl">
-              Best Fashion Collection
+              Best CO-mic Collection
             </h1>
             <p className="max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl">
               Quisquemos sodales suscipit tortor ditaemcos condimentum de cosmo
@@ -43,12 +43,12 @@ export default function Home() {
               onClick={() => router.push("/product/listing/all-products")}
               className="mt-1.5 inline-block bg-black px-5 py-3 text-xs font-medium uppercase tracking-wide text-white"
             >
-              Explore Shop Collection
+              Explore Our Collection
             </button>
           </div>
           <div className="hidden lg:mt-0 lg:col-span-5 lg:flex">
             <img
-              src="https://images.unsplash.com/photo-1483985988355-763728e1935b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
+              src="https://images.unsplash.com/photo-1612036782180-6f0b6cd846fe?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Y29taWNzfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60"
               alt="Explore Shop Collection"
             />
           </div>
@@ -59,7 +59,7 @@ export default function Home() {
               <div className="max-w-md mx-auto text-center lg:text-left">
                 <div>
                   <h2 className="text-xl font-bold text-gray-900 sm:text-3xl">
-                    Summer Sale Collection
+                    Sale Collection
                   </h2>
                 </div>
                 <button
@@ -117,13 +117,13 @@ export default function Home() {
             <li>
               <div className="relative block group">
                 <img
-                  src="https://images.unsplash.com/photo-1618898909019-010e4e234c55?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80"
+                  src="https://wallpaperaccess.com/full/342029.jpg"
                   className="object-cover w-full aspect-square"
                 />
                 <div className="absolute inset-0 flex flex-col items-start justify-end p-6">
-                  <h3 className="text-xl font-medium text-white">KIDS</h3>
+                  <h3 className="text-xl font-medium text-white">Marvel</h3>
                   <button
-                    onClick={() => router.push("/product/listing/kids")}
+                    onClick={() => router.push("/product/listing/marvel")}
                     className="mt-1.5 inline-block bg-black px-5 py-3 text-xs font-medium uppercase tracking-wide text-white"
                   >
                     Shop Now
@@ -134,13 +134,13 @@ export default function Home() {
             <li>
               <div className="relative block group">
                 <img
-                  src="https://images.unsplash.com/photo-1624623278313-a930126a11c3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80"
+                  src="https://wallpaperaccess.com/full/328911.png"
                   className="object-cover w-full aspect-square"
                 />
                 <div className="absolute inset-0 flex flex-col items-start justify-end p-6">
-                  <h3 className="text-xl font-medium text-white">WOMEN</h3>
+                  <h3 className="text-xl font-medium text-white">DC</h3>
                   <button
-                    onClick={() => router.push("/product/listing/women")}
+                    onClick={() => router.push("/product/listing/dc")}
                     className="mt-1.5 inline-block bg-black px-5 py-3 text-xs font-medium uppercase tracking-wide text-white"
                   >
                     Shop Now
@@ -151,13 +151,13 @@ export default function Home() {
             <li className="lg:col-span-2 lg:col-start-2 lg:row-span-2 lg:row-start-1">
               <div className="relative block group">
                 <img
-                  src="https://images.unsplash.com/photo-1593795899768-947c4929449d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2672&q=80"
+                  src="https://w0.peakpx.com/wallpaper/1004/461/HD-wallpaper-naruto-classic-comic-comics.jpg"
                   className="object-cover w-full aspect-square"
                 />
                 <div className="absolute inset-0 flex flex-col items-start justify-end p-6">
-                  <h3 className="text-xl font-medium text-white">MEN</h3>
+                  <h3 className="text-xl font-medium text-white">Others</h3>
                   <button
-                    onClick={() => router.push("/product/listing/men")}
+                    onClick={() => router.push("/product/listing/others")}
                     className="mt-1.5 inline-block bg-black px-5 py-3 text-xs font-medium uppercase tracking-wide text-white"
                   >
                     Shop Now
